@@ -17,6 +17,7 @@ typedef struct Cell {
     int value;
     int possibility;
     int fixed;
+    int marked;
 } Cell;
 
 typedef struct Box {

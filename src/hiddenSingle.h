@@ -2,4 +2,4 @@
 
 #include "auxilary.h"
 
-int checkHiddenSingles(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns);
+int checkHiddenSingles(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns);

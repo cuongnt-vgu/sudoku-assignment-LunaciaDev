@@ -2,4 +2,4 @@
 
 #include "auxilary.h"
 
-int checkNakedPair(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns);
+int checkNakedPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns);

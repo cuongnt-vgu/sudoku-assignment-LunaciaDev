@@ -75,7 +75,7 @@ void printSudokuGrid(Cell*** sudokuGrid) {
     printf("\n");
 }
 
-void cleanUp(Cell*** sudokuGrid, Box** boxGrid, Axis** row, Axis** column) {
+void cleanUp(Cell*** sudokuGrid, Axis** boxGrid, Axis** row, Axis** column) {
     for (int i = 0; i < 9; i++) {
         for (int k = 0; k < 9; k++) {
             free(sudokuGrid[i][k]);
@@ -100,7 +100,7 @@ void cleanUp(Cell*** sudokuGrid, Box** boxGrid, Axis** row, Axis** column) {
     free(column);
 }
 
-void possibilityCleanup(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+void possibilityCleanup(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     for (int i = 0; i < 9; i++) {
         for (int k = 0; k < 9; k++) {
             if (sudokuGrid[i][k] -> value > -1) {
@@ -148,7 +148,7 @@ int countOneBits(int bitStream) {
     return bitcount;
 }
 
-int checkSingularBit(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns, int bits, int i, int k) {
+int checkSingularBit(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns, int bits, int i, int k) {
     /*
         Given a binary value, is it possible to check if it only have a single bit being 1?
         0b001000000
@@ -183,7 +183,7 @@ int checkSingularBit(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** colu
     return 0;
 }
 
-int checkSolvedCells(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkSolvedCells(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int solvedCellCount = 0;
 
     for (int i = 0; i < 9; i++) {
@@ -226,11 +226,11 @@ Cell*** createSudokuGrid() {
     return sudokuGrid;
 }
 
-Box** createBoxGrid(Cell *** sudokuGrid) {
-    Box** boxGrid = malloc(sizeof(Box*) * 9);
+Axis** createBoxGrid(Cell *** sudokuGrid) {
+    Axis** boxGrid = malloc(sizeof(Axis*) * 9);
 
     for (int i = 0; i < 9; i++) {
-        boxGrid[i] = malloc(sizeof(Box));
+        boxGrid[i] = malloc(sizeof(Axis));
         boxGrid[i] -> memberArray = malloc(sizeof(Cell*) * 9);
         
         for (int k = 0; k < 3; k++) {

@@ -2,4 +2,4 @@
 
 #include "auxilary.h"
 
-int checkHiddenTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns);
+int checkHiddenTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns);

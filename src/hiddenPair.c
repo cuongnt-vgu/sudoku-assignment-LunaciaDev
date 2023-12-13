@@ -1,6 +1,6 @@
 #include "hiddenPair.h"
 
-int checkHiddenPair(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkHiddenPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int foundCount = 0;
 
     int* bitsRangeA;

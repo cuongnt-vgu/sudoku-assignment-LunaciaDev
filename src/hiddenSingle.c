@@ -1,6 +1,6 @@
 #include "hiddenSingle.h"
 
-int checkHiddenSingles(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkHiddenSingles(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int solvedCellCount = 0;
 
     for (int i = 0; i < 9; i++) {

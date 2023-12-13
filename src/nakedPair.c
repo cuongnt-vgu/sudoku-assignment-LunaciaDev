@@ -1,6 +1,6 @@
 #include "nakedPair.h"
 
-int checkNakedPair(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkNakedPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int checksum = generateBoardChecksum(sudokuGrid);
     int foundCount = 0; // might need to return this
     int bitsRangeA, bitsRangeB;

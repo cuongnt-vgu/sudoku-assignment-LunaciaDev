@@ -1,6 +1,6 @@
 #include "hiddenTriple.h"
 
-int checkHiddenTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkHiddenTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int foundCount = 0;
 
     int* bitsRangeA;

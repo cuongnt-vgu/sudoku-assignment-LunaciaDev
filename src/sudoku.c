@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     }
 
     Cell*** sudokuGrid = createSudokuGrid();
-    Box** boxGrid = createBoxGrid(sudokuGrid);
+    Axis** boxGrid = createBoxGrid(sudokuGrid);
     Axis** rows = createAxis(sudokuGrid, 0);
     Axis** columns = createAxis(sudokuGrid, 1);
 
