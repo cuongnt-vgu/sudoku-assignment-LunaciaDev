@@ -1,2 +1,5 @@
 *.o
 sudoku
+.cache
+autograder
+compile_commands.json

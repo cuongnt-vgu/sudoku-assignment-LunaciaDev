@@ -1,4 +1,3 @@
-#include <assert.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,12 +5,13 @@
 #include <unistd.h>
 #include <wchar.h>
 
+#include "../src/auxilary.h"
 #include "../src/sudoku.h"
-#include "../src/hidden_singles.h"
-#include "../src/hidden_pairs.h"
-#include "../src/hidden_triples.h"
-#include "../src/naked_pairs.h"
-#include "../src/naked_triples.h"
+#include "../src/hiddenSingle.h"
+#include "../src/hiddenPair.h"
+#include "../src/hiddenTriple.h"
+#include "../src/nakedPair.h"
+#include "../src/nakedTriple.h"
 
 // Verbosity of test runner. Overridden via compilation flag
 #ifdef VERBOSE
@@ -20,6 +20,34 @@
 #ifndef VERBOSE
 #define VERBOSE 0
 #endif
+
+const int TWO_POWER_LOOKUP[9] = {
+    1, 
+    2, 
+    4, 
+    8, 
+    16, 
+    32, 
+    64, 
+    128, 
+    256
+};
+
+const int BOX_LOOKUP[9][2] = {
+    {0, 0},
+    {0, 3},
+    {0, 6},
+    {3, 0},
+    {3, 3},
+    {3, 6},
+    {6, 0},
+    {6, 3},
+    {6, 6}
+};
+
+const int BIT_MASK = 0x1ff;
+
+const int BOARD_SIZE = 9;
 
 char mapping[32] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
 
@@ -57,79 +85,72 @@ void load_cell_candidates(Cell *p_cell, char *textData)
 {
     int left_num = get_index(mapping, 32, textData[0]);
     int right_num = get_index(mapping, 32, textData[1]);
-
     int bin_candidates[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int candidate = 0;
 
     toBinary(right_num, &(bin_candidates[0]));
     toBinary(left_num, &(bin_candidates[5]));
 
-    int counter = 0;
-    int candidates[BOARD_SIZE];
-
-    for (int cand = 1; cand <= 9; cand++)
-    {
-        if (bin_candidates[cand])
-            candidates[counter++] = cand;
+    for (int i = 1; i < 10; i++) {
+        candidate += bin_candidates[i] == 1 ? TWO_POWER_LOOKUP[i-1] : 0;
     }
 
-    set_candidates(p_cell, candidates, counter);
-    if (bin_candidates[0])
-        p_cell->fixed = true;
-    else
-        p_cell->fixed = false;
+    p_cell -> possibility = candidate;
+    if (bin_candidates[0] == 1) p_cell -> fixed = 1; 
 }
 
-void load_sudoku_with_candidates(SudokuBoard *p_board, char *textData)
+void load_sudoku_with_candidates(Cell*** sudokuBoard, char *textData)
 {
-    for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++)
-    {
-        load_cell_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]), textData);
-        textData += 2;
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int k = 0; k < BOARD_SIZE; k++) {
+            load_cell_candidates(sudokuBoard[i][k], textData);
+            textData += 2;
+        }
     }
 }
 
 void print_string_candidates(Cell *p_cell, char *textData)
 {
-    int *candidates = get_candidates(p_cell);
-    int len = p_cell->num_candidates;
+    int candidates = p_cell -> possibility;
 
     int bin_candidates[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
     if (p_cell->fixed)
         bin_candidates[0] = 1;
 
-    for (int i = 0; i < len; i++)
-    {
-        bin_candidates[candidates[i]] = 1;
+    for (int i = 0; i < 9; i++) {
+        bin_candidates[i] = candidates % 2;
+        candidates = candidates >> 2;
     }
+
     int left_index = toInteger(&(bin_candidates[5]), 5);
     int right_index = toInteger(&(bin_candidates[0]), 5);
     sprintf(textData, "%c%c", mapping[left_index], mapping[right_index]);
-    free(candidates);
 }
 
-void print_sudoku_with_candidates(SudokuBoard *p_board, char *textData)
+void print_sudoku_with_candidates(Cell*** p_board, char *textData)
 {
-    for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++)
-    {
-        print_string_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]), textData);
-        textData += 2;
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int k = 0; k < BOARD_SIZE; k++) {
+            print_string_candidates(p_board[i][k], textData);
+            textData += 2;
+        }
     }
 }
 
-typedef int (*method)(SudokuBoard *p_board);
+typedef int (*method)(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns);
 
 method get_method(char *method_name)
 {
     if (strcmp(method_name, "hidden_singles") == 0)
-        return hidden_singles;
+        return checkHiddenSingles;
     else if (strcmp(method_name, "naked_pairs") == 0)
-        return naked_pairs;
+        return checkNakedPair;
     else if (strcmp(method_name, "hidden_pairs") == 0)
-        return hidden_pairs;
+        return checkHiddenPair;
     else if (strcmp(method_name, "naked_triples") == 0)
-        return naked_triples;
+        return checkNakedTriple;
     else if (strcmp(method_name, "hidden_triples") == 0)
-        return hidden_triples;
+        return checkHiddenTriple;
     else
         return NULL;
 }
@@ -142,18 +163,24 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    SudokuBoard *board = malloc(sizeof(SudokuBoard));
-    init_sudoku(board);
-    load_sudoku_with_candidates(board, argv[1]);
+    Cell*** sudokuGrid = createSudokuGrid();
+    Box** boxGrid = createBoxGrid(sudokuGrid);
+    Axis** rows = createAxis(sudokuGrid, 0);
+    Axis** columns = createAxis(sudokuGrid, 1);
+    
+    load_sudoku_with_candidates(sudokuGrid, argv[1]);
+
+    checkSolvedCells(sudokuGrid, boxGrid, rows, columns);
+    possibilityCleanup(sudokuGrid, boxGrid, rows, columns);
 
     FILE *pipe = fdopen(atoi(argv[3]), "w");
 
-    int num_detected = get_method(argv[2])(board);
+    int num_detected = get_method(argv[2])(sudokuGrid, boxGrid, rows, columns);
 
     char *outText = malloc(BOARD_SIZE * BOARD_SIZE * 2 + 1);
     outText[0] = '\0';
 
-    print_sudoku_with_candidates(board, outText);
+    print_sudoku_with_candidates(sudokuGrid, outText);
 
     fprintf(pipe,
             "{\n"
@@ -162,9 +189,7 @@ int main(int argc, char **argv)
             "}\n",
             num_detected, outText);
 
-    free_sudoku(board);
-    free(board);
-    free(outText);
+    cleanUp(sudokuGrid, boxGrid, rows, columns);
 
     fclose(pipe);
     exit(EXIT_SUCCESS);

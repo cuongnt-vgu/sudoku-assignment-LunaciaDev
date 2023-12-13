@@ -1,6 +1,6 @@
-#include "nakedPairTriple.h"
+#include "nakedTriple.h"
 
-int checkNakedPairTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
+int checkNakedTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns) {
     int checksum = generateBoardChecksum(sudokuGrid);
     int foundCount = 0; // might need to return this
     int bitsRangeA, bitsRangeB, bitsRangeC;
@@ -19,20 +19,9 @@ int checkNakedPairTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** 
             for (int k = i+1; k < 9; k++) {
                 if (rows[member] -> memberArray[k] -> value != -1) continue;
                 bitsRangeB = bitsRangeA | rows[member] -> memberArray[k] -> possibility;
-                
-                if (countOneBits(bitsRangeB) == 2) {
-                    foundCount++;
-
-                    for (int l = 0; l < 9; l++) {
-                        if (l == i || l == k) continue;
-                        
-                        rows[member] -> memberArray[l] -> possibility &= (~bitsRangeA) & BIT_MASK;
-                    }
-                }
 
                 for (int l = k+1; l < 9; l++) {
                     if (rows[member] -> memberArray[l] -> value != -1) continue;
-
                     bitsRangeC = bitsRangeA | bitsRangeB | rows[member] -> memberArray[l] -> possibility;
 
                     if (countOneBits(bitsRangeC) == 3) {
@@ -57,21 +46,9 @@ int checkNakedPairTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** 
             for (int k = i+1; k < 9; k++) {
                 if (columns[member] -> memberArray[k] -> value != -1) continue;
                 bitsRangeB = bitsRangeA | columns[member] -> memberArray[k] -> possibility;
-                
-                if (countOneBits(bitsRangeB) == 2) {
-                    foundCount++;
-
-                    for (int l = 0; l < 9; l++) {
-                        if (l == i || l == k) continue;
-                        
-                        columns[member] -> memberArray[l] -> possibility &= (~bitsRangeA) & BIT_MASK;
-                    }
-
-                }
 
                 for (int l = k+1; l < 9; l++) {
                     if (columns[member] -> memberArray[l] -> value != -1) continue;
-
                     bitsRangeC = bitsRangeA | bitsRangeB | columns[member] -> memberArray[l] -> possibility;
 
                     if (countOneBits(bitsRangeC) == 3) {
@@ -96,21 +73,9 @@ int checkNakedPairTriple(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** 
             for (int k = i+1; k < 9; k++) {
                 if (boxGrid[member] -> memberArray[k] -> value != -1) continue;
                 bitsRangeB = bitsRangeA | boxGrid[member] -> memberArray[k] -> possibility;
-                
-                if (countOneBits(bitsRangeB) == 2) {
-                    foundCount++;
-
-                    for (int l = 0; l < 9; l++) {
-                        if (l == i || l == k) continue;
-                        
-                        boxGrid[member] -> memberArray[l] -> possibility &= (~bitsRangeA) & BIT_MASK;
-                    }
-
-                }
 
                 for (int l = k+1; l < 9; l++) {
                     if (boxGrid[member] -> memberArray[l] -> value != -1) continue;
-
                     bitsRangeC = bitsRangeA | bitsRangeB | boxGrid[member] -> memberArray[l] -> possibility;
 
                     if (countOneBits(bitsRangeC) == 3) {
