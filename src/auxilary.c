@@ -1,6 +1,4 @@
 #include "auxilary.h"
-#include "sudoku.h"
-#include <c++/9/variant>
 
 void printSudokuGrid(Cell*** sudokuGrid) {
     char printGrid[9][9][9];
