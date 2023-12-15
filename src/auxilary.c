@@ -125,6 +125,14 @@ void possibilityCleanup(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** 
     }
 }
 
+void clearAllMarker(Cell*** sudokuGrid) {
+    for (int i = 0; i < 9; i++) {
+        for (int k = 0; k < 9; k++) {
+            sudokuGrid[i][k] -> marked = 0;
+        }
+    }
+}
+
 int generateBoardChecksum(Cell *** sudokuGrid) {
     int checksum = 0;
 

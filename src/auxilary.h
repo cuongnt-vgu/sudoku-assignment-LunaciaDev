@@ -11,6 +11,8 @@ void cleanUp(Cell*** sudokuGrid, Axis** boxGrid, Axis** row, Axis** column);
 
 void possibilityCleanup(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns);
 
+void clearAllMarker(Cell*** sudokuGrid);
+
 int generateBoardChecksum(Cell *** sudokuGrid);
 
 int countOneBits(int bitStream);
