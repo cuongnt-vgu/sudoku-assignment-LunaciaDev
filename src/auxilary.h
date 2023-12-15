@@ -13,6 +13,12 @@ void possibilityCleanup(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** 
 
 void clearAllMarker(Cell*** sudokuGrid);
 
+clearQueue* getMask(clearQueue** head);
+
+void addMask(clearQueue** head, int mask, Cell** groupToApply, int* excludeMembers);
+
+void applyMask(clearQueue** head);
+
 int generateBoardChecksum(Cell *** sudokuGrid);
 
 int countOneBits(int bitStream);

@@ -1,6 +1,6 @@
 #include "nakedPair.h"
 
-int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group) {
+int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
     int foundCount = 0;
 
     int bitsRangeA, bitsRangeB;
@@ -20,11 +20,11 @@ int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group) {
                 group -> memberArray[i] -> marked = 1;
                 group -> memberArray[k] -> marked = 1;
 
-                for (int l = 0; l < 9; l++) {
-                    if (l == i || l == k) continue;
-                    
-                    group -> memberArray[l] -> possibility &= (~bitsRangeA) & BIT_MASK;
-                }
+                int* excludeMembers = malloc(sizeof(int) * 9);
+                excludeMembers[i] = 1;
+                excludeMembers[k] = 1;
+
+                addMask(head, (~bitsRangeB) & BIT_MASK, group -> memberArray, excludeMembers);
             }
         }
     }
@@ -33,8 +33,8 @@ int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group) {
 }
 
 int checkNakedPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
-    int checksum = generateBoardChecksum(sudokuGrid);
     int foundCount = 0; // might need to return this
+    clearQueue* head = NULL;
 
     // We could try and merge all the for loop into one as it feels redundant
     // but a lot of logic need to be changed, prob not worth it
@@ -43,12 +43,12 @@ int checkNakedPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** colum
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        foundCount += findNakedPairInGroup(sudokuGrid, rows[member]);
-        foundCount += findNakedPairInGroup(sudokuGrid, columns[member]);
-        foundCount += findNakedPairInGroup(sudokuGrid, boxGrid[member]);
+        foundCount += findNakedPairInGroup(sudokuGrid, rows[member], &head);
+        foundCount += findNakedPairInGroup(sudokuGrid, columns[member], &head);
+        foundCount += findNakedPairInGroup(sudokuGrid, boxGrid[member], &head);
     }
 
-    if (checksum != generateBoardChecksum(sudokuGrid)) return foundCount;
+    applyMask(&head);
 
-    return 0;
+    return foundCount;
 }

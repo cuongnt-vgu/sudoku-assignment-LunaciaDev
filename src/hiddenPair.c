@@ -1,19 +1,19 @@
 #include "hiddenPair.h"
 
-int findHiddenPairInGroup(Cell*** sudokuGrid, Axis* group) {
+int findHiddenPairInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
     int foundCount = 0;
 
-    int* bitsRangeA;
-    int* bitsRangeB;
+    int bitsRangeA;
+    int bitsRangeB;
     int temp;
 
     for (int i = 0; i < 9; i++) {
         if (group -> memberArray[i] -> value != -1) continue;
-        bitsRangeA = &group -> memberArray[i] -> possibility;
+        bitsRangeA = group -> memberArray[i] -> possibility;
 
         for (int k = i+1; k < 9; k++) {
             if (group -> memberArray[k] -> value != -1) continue;
-            bitsRangeB = &group -> memberArray[k] -> possibility;
+            bitsRangeB = group -> memberArray[k] -> possibility;
 
             temp = 0;
 
@@ -25,7 +25,9 @@ int findHiddenPairInGroup(Cell*** sudokuGrid, Axis* group) {
 
             temp = ~temp & BIT_MASK;
 
-            temp = (*bitsRangeA & temp) | (*bitsRangeB & temp);
+            temp = (bitsRangeA & temp) | (bitsRangeB & temp);
+
+            if (temp == bitsRangeA && temp == bitsRangeB) continue;
 
             if (countOneBits(temp) == 2) {
                 if (group -> memberArray[i] -> marked != 1 && group -> memberArray[k] -> marked != 1)
@@ -34,8 +36,18 @@ int findHiddenPairInGroup(Cell*** sudokuGrid, Axis* group) {
                 group -> memberArray[i] -> marked = 1;
                 group -> memberArray[k] -> marked = 1;
 
-                *bitsRangeA &= temp;
-                *bitsRangeB &= temp;
+                int* excludeMembers = malloc(sizeof(int) * 9);
+
+                for (int m = 0; m < 9; m++) {
+                    if (m == i || m == k) continue;
+
+                    excludeMembers[m] = 1;
+                }
+
+                addMask(head, temp, group -> memberArray, excludeMembers);
+
+                bitsRangeA &= temp;
+                bitsRangeB &= temp;
             }
         }
     }
@@ -45,16 +57,18 @@ int findHiddenPairInGroup(Cell*** sudokuGrid, Axis* group) {
 
 int checkHiddenPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
     int foundCount = 0;
+    clearQueue* head = NULL;
 
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        
-        foundCount += findHiddenPairInGroup(sudokuGrid, rows[member]);
-        foundCount += findHiddenPairInGroup(sudokuGrid, columns[member]);
-        foundCount += findHiddenPairInGroup(sudokuGrid, boxGrid[member]);
+        foundCount += findHiddenPairInGroup(sudokuGrid, rows[member], &head);
+        foundCount += findHiddenPairInGroup(sudokuGrid, columns[member], &head);
+        foundCount += findHiddenPairInGroup(sudokuGrid, boxGrid[member], &head);
 
     }
+
+    applyMask(&head);
 
     return foundCount;
 }

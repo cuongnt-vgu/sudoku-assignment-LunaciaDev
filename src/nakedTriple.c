@@ -1,6 +1,6 @@
 #include "nakedTriple.h"
 
-int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group) {
+int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
     int foundCount = 0;
     
     int bitsRangeA, bitsRangeB, bitsRangeC;
@@ -25,12 +25,12 @@ int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group) {
                     group -> memberArray[k] -> marked = 1;
                     group -> memberArray[l] -> marked = 1;
 
-                    for (int m = 0; m < 9; m++) {
-                        if (m == i || m == k || m == l) continue;
+                    int* excludeMembers = malloc(sizeof(int) * 9);
+                    excludeMembers[i] = 1;
+                    excludeMembers[k] = 1;
+                    excludeMembers[l] = 1;
 
-                        group -> memberArray[m] -> possibility &= (~bitsRangeC) & BIT_MASK;
-                    }
-
+                    addMask(head, (~bitsRangeC) & BIT_MASK, group -> memberArray, excludeMembers);
                 }
             }
         }
@@ -40,8 +40,8 @@ int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group) {
 }
 
 int checkNakedTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns) {
-    int checksum = generateBoardChecksum(sudokuGrid);
     int foundCount = 0; // might need to return this
+    clearQueue* head = NULL;
 
     // We could try and merge all the for loop into one as it feels redundant
     // but a lot of logic need to be changed, prob not worth it
@@ -50,12 +50,12 @@ int checkNakedTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** col
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        foundCount += findNakedTripleInGroup(sudokuGrid, rows[member]);
-        foundCount += findNakedTripleInGroup(sudokuGrid, columns[member]);
-        foundCount += findNakedTripleInGroup(sudokuGrid, boxGrid[member]);
+        foundCount += findNakedTripleInGroup(sudokuGrid, rows[member], &head);
+        foundCount += findNakedTripleInGroup(sudokuGrid, columns[member], &head);
+        foundCount += findNakedTripleInGroup(sudokuGrid, boxGrid[member], &head);
     }
 
-    if (checksum != generateBoardChecksum(sudokuGrid)) return foundCount;
+    applyMask(&head);
 
-    return 0;
+    return foundCount;
 }

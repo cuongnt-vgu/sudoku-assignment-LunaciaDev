@@ -1,4 +1,6 @@
 #include "auxilary.h"
+#include "sudoku.h"
+#include <c++/9/variant>
 
 void printSudokuGrid(Cell*** sudokuGrid) {
     char printGrid[9][9][9];
@@ -283,4 +285,37 @@ Axis** createAxis(Cell*** sudokuGrid, int direction) {
     }
 
     return axis;
+}
+
+void addMask(clearQueue** head, int mask, Cell** groupToApply, int* excludeMembers) {
+    clearQueue* newMask = malloc(sizeof(clearQueue));
+
+    newMask -> mask = mask;
+    newMask -> groupToApply = groupToApply;
+    newMask -> excludeMembers = excludeMembers;
+    newMask -> next = *head;
+    *head = newMask;    
+}
+
+clearQueue* getMask(clearQueue** head) {
+    clearQueue* mask = (*head);
+
+    *head = (*head) -> next;
+
+    return mask;
+}
+
+void applyMask(clearQueue** head) {
+    while (*head != NULL) {
+        clearQueue* mask = getMask(head);
+
+        for (int i = 0; i < 9; i++) {
+            if (mask -> excludeMembers[i] == 1) continue;
+
+            mask -> groupToApply[i] -> possibility &= mask -> mask;
+        }
+
+        free(mask -> excludeMembers);
+        free(mask);
+    }
 }

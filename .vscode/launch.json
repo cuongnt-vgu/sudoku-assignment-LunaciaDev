@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "Launch Autograder",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/autograder",
-            "args": ["000105000140000670080002400063070010900000003010090520007200080026000035000409000", "hidden_singles"],
+            "args": ["09801mk06gmg7mmmkgg1411g04032gboao8g210m0m1181094mkmkg052q6qc810cgg122cg11ggkg210503cgcg094iiq81k84gkg262611c2i2m20h0911c0s005cg0s4s02g1c4co1121cg10msc060e4coso03", "hidden_triples", ""],
             "cwd": "${workspaceFolder}",
         }
     ]

@@ -113,13 +113,19 @@ void print_string_candidates(Cell *p_cell, char *textData)
 {
     int candidates = p_cell -> possibility;
 
-    int bin_candidates[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int bin_candidates[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
     if (p_cell->fixed)
         bin_candidates[0] = 1;
 
-    for (int i = 0; i < 9; i++) {
-        bin_candidates[i] = candidates % 2;
-        candidates = candidates >> 2;
+    if (p_cell -> value == -1) {
+        for (int i = 1; i < 10; i++) {
+            bin_candidates[i] = candidates % 2;
+            candidates = candidates >> 1;
+        }
+    }
+    else {
+        bin_candidates[p_cell -> value + 1] = 1;
     }
 
     int left_index = toInteger(&(bin_candidates[5]), 5);
@@ -137,7 +143,7 @@ void print_sudoku_with_candidates(Cell*** p_board, char *textData)
     }
 }
 
-typedef int (*method)(Cell*** sudokuGrid, Box** boxGrid, Axis** rows, Axis** columns);
+typedef int (*method)(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** columns);
 
 method get_method(char *method_name)
 {
@@ -164,7 +170,7 @@ int main(int argc, char **argv)
     }
 
     Cell*** sudokuGrid = createSudokuGrid();
-    Box** boxGrid = createBoxGrid(sudokuGrid);
+    Axis** boxGrid = createBoxGrid(sudokuGrid);
     Axis** rows = createAxis(sudokuGrid, 0);
     Axis** columns = createAxis(sudokuGrid, 1);
     

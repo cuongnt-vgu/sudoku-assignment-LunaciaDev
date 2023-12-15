@@ -29,3 +29,10 @@ typedef struct Axis {
     Cell** memberArray;
     int impossibleValue;
 } Axis;
+
+typedef struct clearQueue {
+    int mask;
+    Cell** groupToApply;
+    int* excludeMembers;
+    struct clearQueue* next;
+} clearQueue;
