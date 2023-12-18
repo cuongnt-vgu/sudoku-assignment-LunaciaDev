@@ -1,14 +1,104 @@
 {
   "tests": [
     {
-      "name": "public test",
-      "setup": "make sudoku",
-      "run": "bash test.sh",
+      "name": "Test 01",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 1",
       "input": "",
-      "output": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test001 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
-      "points": null
+      "points": 1
+    },
+    {
+      "name": "Test 02",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 2",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test002 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 03",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 3",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test003 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 04",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 4",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test004 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 05",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 5",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test005 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 06",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 6",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test006 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 07",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 7",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test007 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 08",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 8",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test008 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 09",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 9",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test009 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 10",
+      "setup": "make autograder",
+      "run": "python ./test/autograder.py 10",
+      "input": "",
+      "output": "Running test test001\nTest passed successfully\n\n============================== SUMMARY ==============================\nPASSED: test010 | 100.0 %\nFAILED:  | 0.0 %",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
     }
   ]
 }
