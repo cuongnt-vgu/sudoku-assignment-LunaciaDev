@@ -5,6 +5,10 @@ int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
     
     int bitsRangeA, bitsRangeB, bitsRangeC;
 
+    /*
+    We simply find 3 cells where OR their possibility yield 3x 1 bit.
+    */
+
     for (int i = 0; i < 9; i++) {
         if (group -> memberArray[i] -> value != -1) continue;
         bitsRangeA = group -> memberArray[i] -> possibility;

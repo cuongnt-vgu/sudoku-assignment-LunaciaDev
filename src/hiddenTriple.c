@@ -8,6 +8,13 @@ int findHiddenTripleInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) 
     int bitsRangeB;
     int bitsRangeC;
 
+    /*
+    We first OR all possibility that's not from the 3 cells selected
+    NOT that to get what is not within the combination.
+
+    Compare that with the possibility of the selected cell to check if they are hidden!
+    */
+
     for (int i = 0; i < 9; i++) {
         if (group -> memberArray[i] -> value != -1) continue;
         bitsRangeA = group -> memberArray[i] -> possibility;

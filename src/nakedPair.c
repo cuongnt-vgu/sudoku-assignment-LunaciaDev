@@ -4,6 +4,9 @@ int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
     int foundCount = 0;
 
     int bitsRangeA, bitsRangeB;
+    /*
+    We just simply find two cell where OR the possibility yield 2x 1 bit.
+    */
     
     for (int i = 0; i < 9; i++) {
         if (group -> memberArray[i] -> value != -1) continue;

@@ -8,10 +8,9 @@ int checkHiddenSingles(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** c
             if (sudokuGrid[i][k] -> value != -1) continue;
             
             /*
-                This one is annoying with the current system
                 For each cell, we OR all possible values of other cell on same row/col/box
                 NOT the result, then AND with the possible values of current cell
-                Gotta make sure to 0 out possibility for this to work
+                That will filter out all possibility the cell and the row/col/box have in commn
                 Check if there's only one bit, and voila!
             */
             int row = 0, col = 0, box = 0;
