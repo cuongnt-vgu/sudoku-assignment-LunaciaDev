@@ -5,7 +5,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 1",
       "input": "",
-      "output": "%0ARunning test test001%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test001\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test001 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -15,7 +15,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 2",
       "input": "",
-      "output": "%0ARunning test test002%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test002\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test002 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -25,7 +25,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 3",
       "input": "",
-      "output": "%0ARunning test test003%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test003\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test003 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -35,7 +35,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 4",
       "input": "",
-      "output": "%0ARunning test test004%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test004\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test004 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -45,7 +45,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 5",
       "input": "",
-      "output": "%0ARunning test test005%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test005\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test005 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -55,7 +55,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 6",
       "input": "",
-      "output": "%0ARunning test test006%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test006\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test006 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -65,7 +65,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 7",
       "input": "",
-      "output": "%0ARunning test test007%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test007\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test007 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -75,7 +75,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 8",
       "input": "",
-      "output": "%0ARunning test test008%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test008\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test008 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -85,7 +85,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 9",
       "input": "",
-      "output": "%0ARunning test test009%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test009\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test009 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
@@ -95,7 +95,7 @@
       "setup": "make autograder",
       "run": "python ./test/autograder.py 10",
       "input": "",
-      "output": "%0ARunning test test010%0ATest passed successfully%0A%0A============================== SUMMARY ==============================%0APASSED: test001 | 100.0 %25%0AFAILED:  | 0.0 %25",
+      "output": "Running test test010\n\033[92mTest passed successfully\033[0m\n\n============================== SUMMARY ==============================\nPASSED: test010 | 100.0 %\nFAILED:  | 0.0 %",
       "comparison": "exact",
       "timeout": 10,
       "points": 1
