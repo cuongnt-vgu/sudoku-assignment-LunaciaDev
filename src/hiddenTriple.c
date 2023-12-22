@@ -1,6 +1,6 @@
 #include "hiddenTriple.h"
 
-int findHiddenTripleInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
+int findHiddenTripleInGroup(Axis* group, clearQueue** head) {
     int foundCount = 0;
 
     int temp;
@@ -77,9 +77,9 @@ int checkHiddenTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** co
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        foundCount += findHiddenTripleInGroup(sudokuGrid, rows[member], &head);
-        foundCount += findHiddenTripleInGroup(sudokuGrid, columns[member], &head);
-        foundCount += findHiddenTripleInGroup(sudokuGrid, boxGrid[member], &head);
+        foundCount += findHiddenTripleInGroup(rows[member], &head);
+        foundCount += findHiddenTripleInGroup(columns[member], &head);
+        foundCount += findHiddenTripleInGroup(boxGrid[member], &head);
     }
 
     applyMask(&head);

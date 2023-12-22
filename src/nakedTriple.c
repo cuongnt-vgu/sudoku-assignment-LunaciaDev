@@ -1,6 +1,6 @@
 #include "nakedTriple.h"
 
-int findNakedTripleInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
+int findNakedTripleInGroup(Axis* group, clearQueue** head) {
     int foundCount = 0;
     
     int bitsRangeA, bitsRangeB, bitsRangeC;
@@ -54,9 +54,9 @@ int checkNakedTriple(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** col
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        foundCount += findNakedTripleInGroup(sudokuGrid, rows[member], &head);
-        foundCount += findNakedTripleInGroup(sudokuGrid, columns[member], &head);
-        foundCount += findNakedTripleInGroup(sudokuGrid, boxGrid[member], &head);
+        foundCount += findNakedTripleInGroup(rows[member], &head);
+        foundCount += findNakedTripleInGroup(columns[member], &head);
+        foundCount += findNakedTripleInGroup(boxGrid[member], &head);
     }
 
     applyMask(&head);

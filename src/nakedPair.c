@@ -1,6 +1,6 @@
 #include "nakedPair.h"
 
-int findNakedPairInGroup(Cell*** sudokuGrid, Axis* group, clearQueue** head) {
+int findNakedPairInGroup(Axis* group, clearQueue** head) {
     int foundCount = 0;
 
     int bitsRangeA, bitsRangeB;
@@ -46,9 +46,9 @@ int checkNakedPair(Cell*** sudokuGrid, Axis** boxGrid, Axis** rows, Axis** colum
     clearAllMarker(sudokuGrid);
 
     for (int member = 0; member < 9; member++) {
-        foundCount += findNakedPairInGroup(sudokuGrid, rows[member], &head);
-        foundCount += findNakedPairInGroup(sudokuGrid, columns[member], &head);
-        foundCount += findNakedPairInGroup(sudokuGrid, boxGrid[member], &head);
+        foundCount += findNakedPairInGroup(rows[member], &head);
+        foundCount += findNakedPairInGroup(columns[member], &head);
+        foundCount += findNakedPairInGroup(boxGrid[member], &head);
     }
 
     applyMask(&head);
